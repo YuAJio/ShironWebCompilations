@@ -82,12 +82,12 @@ namespace YrsMQTTNet.Core
                         new MqttServerClientUnsubscribedTopicHandlerDelegate(EventHanlder.EH_ClientUnSubscribed);
                     mqttServer.ApplicationMessageReceivedHandler =
                         new MqttApplicationMessageReceivedHandlerDelegate(EventHanlder.EH_MessageReceived);
-                    //TODO 记录初始化完毕日志
+                    LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info, "MqttService", "初始化成功");
                 }
             }
             catch (Exception ex)
             {
-                //TODO 记录初始化异常日志
+                LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Exception, "MqttService", $"初始化异常:{ex.Message}");
             }
         }
 
@@ -101,15 +101,11 @@ namespace YrsMQTTNet.Core
                     mqOptionsBuilder = null;
                 }
                 else
-                {
-                    //TODO  记录日志 未初始化MQ服务器
-
-                }
+                    LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Exception, "MqttService", $"开启成功");
             }
             catch (Exception e)
             {
-                //TODO  记录日志 开启服务器异常
-
+                LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Exception, "MqttService", $"开启异常:{e.Message}");
             }
         }
 
@@ -121,13 +117,12 @@ namespace YrsMQTTNet.Core
             {
                 await mqttServer.StopAsync();
                 mqttServer = null;
+                LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Exception, "MqttService", $"停止服务成功");
             }
             catch (Exception ex)
             {
-                //TODO  记录日志 停止服务器异常
-
+                LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Exception, "MqttService", $"停止服务异常:{ex.Message}");
             }
-
         }
 
 

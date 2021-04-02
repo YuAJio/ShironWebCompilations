@@ -5,7 +5,7 @@ namespace LMLogs
 {
     public class NLog
     {
-        public readonly Logger logger;
+        private readonly Logger logger;
 
         private NLog(Logger logger) { this.logger = logger; }
 

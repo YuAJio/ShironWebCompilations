@@ -23,7 +23,6 @@ namespace YrsMQTTNet.Core
             ServerAuth_Password = serverAuth_Password;
         }
 
-
         /// <summary>
         /// 鉴权身份认证
         /// </summary>
@@ -43,7 +42,7 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_StartServer(EventArgs eventArgs)
         {
-            //TODO 添加日志
+            LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info, "MQTT服务已打开");
         }
 
         /// <summary>
@@ -51,8 +50,7 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_StopServer(EventArgs eventArgs)
         {
-            //TODO 添加日志
-
+            LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info, "MQTT服务已关闭");
         }
 
         /// <summary>
@@ -60,9 +58,9 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_ClientConnected(MqttServerClientConnectedEventArgs eventArgs)
         {
-            //TODO 添加日志
-
-
+            LMLogs.NLog.Logger.Log(
+                LMLogs.LogLevel.Info,
+                $"检测到有客户端建立了连接:\n客户端名称:<{eventArgs.ClientId}>");
         }
 
         /// <summary>
@@ -70,8 +68,8 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_ClientDisConnected(MqttServerClientDisconnectedEventArgs eventArgs)
         {
-            //TODO 添加日志
-
+            LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info,
+                $"检测到有客户端断开了连接:\n客户端名称:<{eventArgs.ClientId}>\n客户端断开接方式:<{eventArgs.DisconnectType}>");
         }
 
         /// <summary>
@@ -79,8 +77,10 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_ClientSubscribed(MqttServerClientSubscribedTopicEventArgs eventArgs)
         {
-            //TODO 添加日志
-
+            LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info,
+                $"检测到有客户端订阅了主题:\n" +
+                $"客户端名称:<{eventArgs.ClientId}>\n" +
+                $"主题名:<{eventArgs.TopicFilter.Topic}>");
         }
 
         /// <summary>
@@ -88,8 +88,10 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_ClientUnSubscribed(MqttServerClientUnsubscribedTopicEventArgs eventArgs)
         {
-            //TODO 添加日志
-
+            LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info,
+              $"检测到有客户端退订了主题:\n" +
+              $"客户端名称:<{eventArgs.ClientId}>\n" +
+              $"主题名:<{eventArgs.TopicFilter}>");
         }
 
         /// <summary>
@@ -97,8 +99,11 @@ namespace YrsMQTTNet.Core
         /// </summary>
         public void EH_MessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
         {
-            //TODO 添加日志
-
+            LMLogs.NLog.Logger.Log(LMLogs.LogLevel.Info,
+           $"收到了来自<{eventArgs.ClientId}>客户端的消息:\n" +
+           $"客户端名称:<{eventArgs.ClientId}>\n" +
+           $"消息主题:<{eventArgs.ApplicationMessage.Topic}>\n" +
+           $"消息内容:<{Encoding.UTF8.GetString(eventArgs.ApplicationMessage.Payload)}>");
         }
 
 
